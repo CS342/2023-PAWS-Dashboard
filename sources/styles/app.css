@@ -1,0 +1,216 @@
+/* toolbar */
+.toolbar_button button{
+	padding:0;
+	text-align:center;
+}
+.main_link{
+	cursor: pointer;
+}
+.logo{
+	background:url(webix-logo.svg) 2px 2px no-repeat;
+}
+.logo_inverted{
+	background:url(webix-logo-inv.svg) 2px 2px no-repeat;
+}
+.logo_inverted .webix_template{
+	background-color:transparent !important;
+}
+.webix_view.toolbar_photo > div{
+	padding:0px;
+}
+.mainphoto{
+	border-radius:25px;
+	width:38px;
+	height:38px;
+	cursor:pointer;
+}
+.mainphoto:hover{
+	opacity:0.8;
+}
+/* list of patients */
+.user_photo, .doctor_photo, .friend_photo{
+	display:block;
+	border-radius:25px;
+	width:48px;
+	height:48px;
+	float:left;
+}
+.text{
+	padding:4px 4px 4px 16px;
+	display:inline-block;
+}
+.username, .doctorname{
+	font-size:14px;
+	letter-spacing:0.2px;
+	color:#313131;
+	font-weight:500;
+	line-height:20px;
+	display:block;
+}
+.username{
+	max-width:150px;
+	white-space:nowrap; 
+	text-overflow:ellipsis;
+	overflow:hidden;
+}
+.patient, .field{
+	color:#475466;
+	display:block;
+	letter-spacing:0.2px;
+	line-height:20px; 
+}
+.webix_el_richselect.patients_filter .webix_el_box .webix_inp_static{
+	border:0px;
+	font-size:16px;
+	line-height: 32px !important;
+	font-weight:500;
+}
+.persons_list .webix_list_item,
+.persons_list .webix_list_item.webix_selected{
+	padding:8px 12px;
+}
+.friends_activity_list .webix_list_item,
+.friends_activity_list .webix_list_item.webix_selected{
+	padding:14px 16px;
+}
+/* notifications */
+.notifications .webix_list_item,
+.notifications .webix_list_item.webix_selected{
+	line-height:20px;
+	padding:10px;
+}
+.notifications .webix_list_item .m_title{
+	font-weight:500;
+	color:#313131;
+}
+.notifications .webix_list_item .message{
+	display:block;
+	color:#475466;
+}
+/* chart */
+.webix_chart.patients_chart .webix_chart_legend_item{
+	cursor:pointer;
+}
+.webix_chart.patients_chart > div map area{
+	cursor:default !important;
+}
+/* form */
+.webix_view.form_photo > div{
+	padding:6px 0px 0px 0px;
+}
+/* calendar */
+.webix_cal_day.webix_cal_day_disabled{
+	cursor:not-allowed;
+}
+/* headers (templates) */
+.webix_view.chart_header{
+	text-align:center;
+}
+/* grid */
+.webix_icon.mdi-star.gold{
+	color:gold;
+}
+.webix_icon.mdi-star.grey{
+	color:lightgrey;
+}
+/* login form */
+.link .webix_template{
+	color:rgb(28, 161, 193);
+	cursor:pointer;
+}
+.link .webix_template a:hover{
+	color:rgb(28, 193, 193);
+}
+.link .webix_template a:active{
+	color:rgb(21, 124, 150);
+}
+/* profile menu */
+.webix_list.profile_menu .webix_list_item{
+	border:none;
+}
+/* profile main info */
+.doc_main .doc_name,
+.doc_main .doc_field{
+	display:block;
+}
+.doc_main .doc_name{
+	font-size:16px;
+	font-weight:500;
+	padding-top:8px;
+}
+.doc_main{
+	text-align:center;
+}
+.webix_view.profile_photo > div,
+.webix_view.friend_photo > div{
+	padding:0px 0px 0px 0px;
+}
+/* reviews panel */
+.webix_dataview_inner_item .criterion{
+	display:block;
+	font-weight:500;
+	float:left;
+}
+.webix_dataview_inner_item .stars{
+	display:block;
+	float:right;
+}
+.webix_dataview_inner_item .stars .star{
+	margin-left:-4px;
+	font-size:18px;
+}
+.reviews .webix_dataview_item.tiles .webix_dataview_inner_item{
+	padding:12px;
+}
+/* friends panel */
+.status{
+	position:relative;
+	top:-50px;
+	left:-30px;
+	font-size:12px !important;
+}
+.status.online, .webix_icon.mdi.mdi-toggle-switch{
+	color:#55CD97;
+}
+.status.offline{
+	color:#FF9800;
+}
+/* profile details */
+.profile_templates .webix_template{
+	padding:0px 10px 0px 10px;
+}
+.webix_view.profile_templates{
+	margin-top:0px !important;
+}
+.schedule{
+	float:left;
+	margin: 4px 20px 0px 0px;
+}
+.days{
+	margin-bottom:6px;
+	color:rgb(143, 142, 142);
+}
+.qualification{
+	padding-bottom:10px;
+}
+.skill, .qualification_step, .contact{
+	margin-bottom:8px;
+}
+.place{
+	font-weight:500;
+}
+.webix_el_label.about_label{
+	padding-left:8px;
+	font-size:16px;
+	color:#475466;
+}
+/* settings */
+.webix_label_right{
+	padding-left:10px;
+}
+.webix_el_switch.theme_switch .webix_switch_box{
+	width:80px !important;
+}
+.webix_el_switch.theme_switch .webix_switch_box.webix_switch_on .webix_switch_handle{
+	left:58px !important;
+}
