@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       working-directory: ./react-dashboard
+      CI: ""
 
     defaults:
       run:
