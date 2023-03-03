@@ -15,6 +15,16 @@ export default class DashboardView extends JetView{
 
 		return {
 			cols:[
+				
+				{
+						type: "wide", margin:10, padding:{ top:10, bottom:10, right:10, left:5 },
+					rows:[
+						PersonsView,
+						DatesView
+					
+					
+					]				
+				},
 				{
 					view:"scrollview", borderless:true,
 					body:{
@@ -24,13 +34,6 @@ export default class DashboardView extends JetView{
 							RegistryView
 						]
 					}
-				},
-				{
-					type:"wide", margin:10, padding:{ top:10, bottom:10, right:10, left:5 },
-					rows:[
-						PersonsView,
-						DatesView
-					]
 				}
 			]
 		};
