@@ -4,7 +4,7 @@ import { Container }  from 'react-bootstrap';
 import Login from './components/Login';
 import PrivateRoute from './components/PrivateRoute';
 import { AuthProvider } from './contexts/AuthContext';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
@@ -16,10 +16,12 @@ function App() {
       <div className="w-100" style={{ maxWidth: "400px" }}>
         <Router>
           <AuthProvider>
-            <Switch>
-              <PrivateRoute exact path="/" component={Dashboard} />
-              <Route path="/login" component={Login} />
-            </Switch>
+            <Routes>
+              <Route exact path="/" element={<PrivateRoute/>}>
+                <Route exact path="/" element={<Dashboard />} />
+              </Route>
+              <Route exact path="/login" element={<Login />} />
+            </Routes>
           </AuthProvider>
         </Router>
       </div>
