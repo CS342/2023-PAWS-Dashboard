@@ -8,6 +8,12 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      working-directory: ./react-dashboard
+
+    defaults:
+      run:
+        working-directory: ${{ env.working-directory }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
