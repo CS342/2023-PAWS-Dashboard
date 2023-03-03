@@ -36,7 +36,7 @@ function ChartView({data}) {
             type="number"
             interval={0}
             label={{
-              value: `y`,
+              value: `Voltage (mV)`,
               style: { textAnchor: "middle" },
               angle: -90,
               position: "left",
@@ -53,7 +53,7 @@ function ChartView({data}) {
             type="number"
             label={{
               key: "xAxisLabel",
-              value: "x",
+              value: "Time (ms)",
               position: "bottom"
             }}
             allowDataOverflow={true}
