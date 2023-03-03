@@ -53,7 +53,7 @@ function ChartView({data}) {
             type="number"
             label={{
               key: "xAxisLabel",
-              value: "Time (ms)",
+              value: "Time (s)",
               position: "bottom"
             }}
             allowDataOverflow={true}
