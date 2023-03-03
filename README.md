@@ -8,7 +8,7 @@ The current application uses the Webix template "doctor-appointment-demo" linked
 
 - run ```npm install``` or ```yarn install```
 - run ```npm start``` or ```yarn start```
-- open ```http://localhost:8080`
+- open ```http://localhost:8080```
 
 # License
 
