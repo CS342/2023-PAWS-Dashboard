@@ -2,6 +2,7 @@ module.exports = {
    env: {
       browser: true,
       es2021: true,
+      jest: true
    },
    extends: ['plugin:react/recommended', 'airbnb', 'plugin:react/jsx-runtime', 'prettier'],
    overrides: [],
@@ -11,6 +12,11 @@ module.exports = {
    },
    plugins: ['react', 'prettier'],
    rules: {
-      'indent': 'off'
+      'indent': 'off',
+      'import/order': 'off',
+      'react/jsx-filename-extension': 'off',
+      'camelcase': 'off',
+      'no-console': 'off',
+      'react/prop-types': 'off'
    },
 };

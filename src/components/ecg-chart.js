@@ -25,7 +25,7 @@ function ChartView({ data }) {
                   position: 'left',
                   offset: 0,
                }}
-               allowDataOverflow={true}
+               allowDataOverflow
                strokeWidth={1}
             />
 
@@ -39,7 +39,7 @@ function ChartView({ data }) {
                   value: 'Time (s)',
                   position: 'bottom',
                }}
-               allowDataOverflow={true}
+               allowDataOverflow
                strokeWidth={1}
             />
 
