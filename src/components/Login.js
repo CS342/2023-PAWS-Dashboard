@@ -18,8 +18,9 @@ export default function Login() {
          setError('');
          setLoading(true);
          await login(emailRef.current.value, passwordRef.current.value);
-         history.push('/');
-      } catch {
+         navigate('/');
+      } catch (error) {
+         console.error(error);
          setError('Failed to log in');
       }
 
@@ -30,7 +31,7 @@ export default function Login() {
       <>
          <Card>
             <Card.Body>
-               <h2 className="text-center mb-4">Log In</h2>
+               <h2 className="text-center mb-4">PAWS Dashboard Log In</h2>
                {error && <Alert variant="danger">{error}</Alert>}
                <Form onSubmit={handleSubmit}>
                   <Form.Group id="email">
@@ -41,6 +42,7 @@ export default function Login() {
                      <Form.Label>Password</Form.Label>
                      <Form.Control type="password" ref={passwordRef} required />
                   </Form.Group>
+                  <br />
                   <Button disabled={loading} className="w-100" type="submit">
                      Log In
                   </Button>
