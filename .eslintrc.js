@@ -3,12 +3,14 @@ module.exports = {
       browser: true,
       es2021: true,
    },
-   extends: ['plugin:react/recommended', 'airbnb', 'plugin:react/jsx-runtime'],
+   extends: ['plugin:react/recommended', 'airbnb', 'plugin:react/jsx-runtime', 'prettier'],
    overrides: [],
    parserOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',
    },
-   plugins: ['react'],
-   rules: {},
+   plugins: ['react', 'prettier'],
+   rules: {
+      'indent': 'off'
+   },
 };
