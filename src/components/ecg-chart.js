@@ -1,13 +1,7 @@
-// import {Line} from "react-chartjs-2"
-// import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-// import { LineChart, Line } from 'recharts';
-import LineGraph from 'react-line-graph'
-import {useState} from 'react'
 import {
     CartesianGrid,
     Line,
     LineChart,
-    ReferenceLine,
     ResponsiveContainer,
     XAxis,
     YAxis
