@@ -7,8 +7,10 @@ module.exports = {
   extends: [
     "eslint:recommended",
     "airbnb",
+    "prettier"
   ],
   rules: {
     quotes: ["error", "double"],
+    "no-console": "off"
   },
 };
