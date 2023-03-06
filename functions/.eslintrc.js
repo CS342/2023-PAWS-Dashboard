@@ -6,7 +6,7 @@ module.exports = {
   },
   extends: [
     "eslint:recommended",
-    "google",
+    "airbnb",
   ],
   rules: {
     quotes: ["error", "double"],
