@@ -4,6 +4,7 @@ import { db } from '../firebase';
 import { useParams } from "react-router-dom";
 import Table from 'react-bootstrap/Table';
 import Dashboard from './Dashboard';
+import ecgData from '../ecg.json';
 
 function ECGList() {
     const [ecgList, setEcgList] = useState([]);
@@ -20,7 +21,7 @@ function ECGList() {
             const results = [];
 
             querySnapshot.forEach((doc) => {
-                results.push(doc.id);
+                results.push(doc.data());
             });
 
             setEcgList(results);
@@ -34,19 +35,21 @@ function ECGList() {
         <h1>Loading ...</h1>
         :
         <>
-        <Dashboard />
+        <Dashboard ecgdata={ecgData} />
         <br />
         <h2>Select an ECG to view</h2>
         <Table>
             <thead>
                 <tr>
                     <th>ID #</th>
+                    <th>Date</th>
                 </tr>
             </thead>
             <tbody>
                 {ecgList.map((ecg) => (
                     <tr>
-                        <td>{ecg}</td>
+                        <td>{ecg.id}</td>
+                        <td>{ecg.effectivePeriod.start}</td>
                     </tr>
                 ))}
             </tbody>

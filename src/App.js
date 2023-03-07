@@ -1,8 +1,9 @@
 import './App.css';
+import Container from 'react-bootstrap/Container';
 import Patients from './components/Patients';
 import ECGList from './components/ECGList';
-import { Container } from 'react-bootstrap';
 import Login from './components/Login';
+import Header from './components/Header';
 import PrivateRoute from './components/PrivateRoute';
 import { AuthProvider } from './contexts/AuthContext';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -10,6 +11,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 function App() {
    return (
       <div className="App">
+         <Header />
          <Container>
             <Router>
                <AuthProvider>

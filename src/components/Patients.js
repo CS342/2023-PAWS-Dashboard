@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getDocs, collection } from 'firebase/firestore';
+import { Link } from 'react-router-dom';
 import { db } from '../firebase';
 import Table from 'react-bootstrap/Table';
 
@@ -44,7 +45,7 @@ function Patients() {
                         <tr>
                             <td>{patient.firstName}</td>
                             <td>{patient.lastName}</td>
-                            <td>{patient.id}</td>
+                            <td><Link to={`/ecglist/${patient.id}`}>{patient.id}</Link></td>
                         </tr>
                     ))}
                 </tbody>
