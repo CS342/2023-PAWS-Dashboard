@@ -18,6 +18,20 @@ function ECGList() {
         e.preventDefault();
         setEcgToDisplay(ecgData);
     }
+    
+    const dateToHumanReadable = (date) => {
+        return new Date(date).toLocaleDateString(
+            'en-us',
+            {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                timeZone: 'utc',
+                hour: '2-digit',
+                minute: '2-digit'
+            }
+        )
+    } 
 
     useEffect(() => {
         const getEcgs = async () => {
@@ -56,7 +70,7 @@ function ECGList() {
                 {ecgList.map((ecg) => (
                     <tr>
                         <td>{ecg.id}</td>
-                        <td>{ecg.effectivePeriod.start}</td>
+                        <td>{dateToHumanReadable(ecg.effectivePeriod.start)}</td>
                         <td><Button onClick={handleClick}>View ECG</Button></td>
                     </tr>
                 ))}
