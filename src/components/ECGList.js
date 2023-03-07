@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { getDocs, collection } from 'firebase/firestore';
 import { db } from '../firebase';
 import { useParams } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import Dashboard from './Dashboard';
 import ecgData from '../ecg.json';
@@ -9,8 +10,14 @@ import ecgData from '../ecg.json';
 function ECGList() {
     const [ecgList, setEcgList] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [ecgToDisplay, setEcgToDisplay] = useState(ecgData);
 
     const { patient } = useParams();
+
+    const handleClick = (e) => {
+        e.preventDefault();
+        setEcgToDisplay(ecgData);
+    }
 
     useEffect(() => {
         const getEcgs = async () => {
@@ -35,7 +42,7 @@ function ECGList() {
         <h1>Loading ...</h1>
         :
         <>
-        <Dashboard ecgdata={ecgData} />
+        <Dashboard ecgdata={ecgToDisplay} />
         <br />
         <h2>Select an ECG to view</h2>
         <Table>
@@ -50,6 +57,7 @@ function ECGList() {
                     <tr>
                         <td>{ecg.id}</td>
                         <td>{ecg.effectivePeriod.start}</td>
+                        <td><Button onClick={handleClick}>View ECG</Button></td>
                     </tr>
                 ))}
             </tbody>
@@ -57,5 +65,7 @@ function ECGList() {
         </>
     );
 }
+
+
 
 export default ECGList;
