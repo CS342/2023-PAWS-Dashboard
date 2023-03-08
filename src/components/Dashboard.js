@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
 import ChartView from './ecg-chart';
 import getVoltageData from './ecg-format';
-import ecgData from '../ecg.json';
 
-export default function Dashboard() {
+export default function Dashboard({ ecgdata }) {
    const [data, setData] = useState();
 
    useEffect(() => {
-      setData(getVoltageData(ecgData));
+      setData(getVoltageData(ecgdata));
    }, []);
 
    return <ChartView data={data} />;
