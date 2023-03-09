@@ -64,6 +64,7 @@ function ECGList() {
                 <tr>
                     <th>ID #</th>
                     <th>Date</th>
+                    <th>Diagnosis</th>
                 </tr>
             </thead>
             <tbody>
@@ -71,6 +72,7 @@ function ECGList() {
                     <tr>
                         <td>{ecg.id}</td>
                         <td>{dateToHumanReadable(ecg.effectivePeriod.start)}</td>
+                        <td>{ecg.component[2].valueString}</td>
                         <td><Button onClick={handleClick}>View ECG</Button></td>
                     </tr>
                 ))}
