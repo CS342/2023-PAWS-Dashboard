@@ -45,7 +45,7 @@ function Patients() {
                         <tr>
                             <td>{patient.firstName}</td>
                             <td>{patient.lastName}</td>
-                            <td><Link to={`/ecglist/${patient.id}`}>{patient.id}</Link></td>
+                            <td><Link to={`/ecglist/${patient.id}`} state={{ firstName: patient.firstName, lastName: patient.lastName }}>{patient.id}</Link></td>
                         </tr>
                     ))}
                 </tbody>
