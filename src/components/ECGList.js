@@ -71,7 +71,7 @@ function ECGList() {
                     <tr className={(ecgToDisplay && ecgToDisplay.id) === ecg.id ? 'highlightedrow' : null}>
                         <td>{dateToHumanReadable(ecg.effectivePeriod.start)}</td>
                         <td>{ecg.component[2].valueString}</td>
-                        <td><Button onClick={() => setEcgToDisplay(ecg)}>View ECG</Button></td>
+                        <td><Button onClick={() => setEcgToDisplay(ecg)} aria-label="View ECG">View ECG</Button></td>
                     </tr>
                 ))}
             </tbody>

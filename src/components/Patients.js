@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { getDocs, collection } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
 import { db } from '../firebase';
-import Table from 'react-bootstrap/Table';
+import { Table, Button } from 'react-bootstrap';
 
 function Patients() {
     const [patientList, setPatientList] = useState([]);
@@ -20,6 +20,18 @@ function Patients() {
                 results.push(doc.data());
             });
 
+            results.sort((a, b) => {
+                if (a.lastName < b.lastName) {
+                    return -1;
+                }
+
+                if (a.lastName > b.lastName) {
+                    return 1;
+                }
+
+                return 0;
+            })
+
             setPatientList(results);
             setLoading(false);
         }
@@ -31,25 +43,29 @@ function Patients() {
             <h1>Loading ...</h1>
             :
             <>
-            <h2>Select a patient</h2>
-            <Table>
-                <thead>
-                    <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>ID #</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {patientList.map((patient) => (
+                <h2>Select a patient</h2>
+                <Table>
+                    <thead>
                         <tr>
-                            <td>{patient.firstName}</td>
-                            <td>{patient.lastName}</td>
-                            <td><Link to={`/ecglist/${patient.id}`} state={{ firstName: patient.firstName, lastName: patient.lastName }}>{patient.id}</Link></td>
+                            <th>Last Name</th>
+                            <th>First Name</th>
                         </tr>
-                    ))}
-                </tbody>
-            </Table>
+                    </thead>
+                    <tbody>
+                        {patientList.map((patient) => (
+                            <tr>
+                                <td>{patient.lastName}</td>
+                                <td>{patient.firstName}</td>
+                                <td>
+                                    <Link to={`/ecglist/${patient.id}`} state={{ firstName: patient.firstName, lastName: patient.lastName }}>
+                                        <Button aria-label="View Records">View Records</Button>
+                                    </Link>
+                                </td>
+                            </tr>
+
+                        ))}
+                    </tbody>
+                </Table>
             </>
     );
 }
