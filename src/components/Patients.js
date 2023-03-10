@@ -38,6 +38,7 @@ function Patients() {
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>ID #</th>
+                        <th>More Details</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,7 +46,8 @@ function Patients() {
                         <tr>
                             <td>{patient.firstName}</td>
                             <td>{patient.lastName}</td>
-                            <td><Link to={`/ecglist/${patient.id}`}>{patient.id}</Link></td>
+                            <td>{patient.id}</td>
+                            <td><Link to={`/ecglist/${patient.id}`}>View More</Link></td>
                         </tr>
                     ))}
                 </tbody>
