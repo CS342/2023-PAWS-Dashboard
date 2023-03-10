@@ -1,36 +1,35 @@
 import { useState, useEffect } from 'react';
 import { getDocs, collection } from 'firebase/firestore';
 import { db } from '../firebase';
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import Dashboard from './Dashboard';
-import ecgData from '../ecg.json';
+import { Container } from 'react-bootstrap';
 
 function ECGList() {
     const [ecgList, setEcgList] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [ecgToDisplay, setEcgToDisplay] = useState(ecgData);
+    const [ecgToDisplay, setEcgToDisplay] = useState();
 
     const { patient } = useParams();
 
-    const handleClick = (e) => {
-        e.preventDefault();
-        setEcgToDisplay(ecgData);
-    }
-    
+    const location = useLocation();
+    const { firstName, lastName } = location.state
+
     const dateToHumanReadable = (date) => {
-        return new Date(date).toLocaleDateString(
+        const humanReadableDate = new Date(date).toLocaleDateString(
             'en-us',
             {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric',
-                timeZone: 'utc',
+                timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
                 hour: '2-digit',
                 minute: '2-digit'
             }
         )
+        return humanReadableDate;
     } 
 
     useEffect(() => {
@@ -45,7 +44,17 @@ function ECGList() {
                 results.push(doc.data());
             });
 
+            results.sort((a, b) => {
+                const dateA = new Date(a.effectivePeriod.start);
+                const dateB = new Date(b.effectivePeriod.start);
+
+                if (dateA < dateB) return 1;
+                if (dateB < dateA) return -1;
+                return 0;
+            });
+
             setEcgList(results);
+            setEcgToDisplay(results[0]);
             setLoading(false);
         }
         getEcgs();
@@ -55,28 +64,29 @@ function ECGList() {
         loading ?
         <h1>Loading ...</h1>
         :
-        <>
+        <Container>
+        <h1>{firstName} {lastName}</h1>
         <Dashboard ecgdata={ecgToDisplay} />
-        <br />
-        <h2>Select an ECG to view</h2>
+        <div style={{height: 300, overflowY: 'scroll'}}>
         <Table>
             <thead>
                 <tr>
-                    <th>ID #</th>
                     <th>Date</th>
+                    <th>Diagnosis</th>
                 </tr>
             </thead>
             <tbody>
                 {ecgList.map((ecg) => (
-                    <tr>
-                        <td>{ecg.id}</td>
+                    <tr className={(ecgToDisplay && ecgToDisplay.id) === ecg.id ? 'highlightedrow' : null}>
                         <td>{dateToHumanReadable(ecg.effectivePeriod.start)}</td>
-                        <td><Button onClick={handleClick}>View ECG</Button></td>
+                        <td>{ecg.component[2].valueString}</td>
+                        <td><Button onClick={() => setEcgToDisplay(ecg)} aria-label="View ECG">View ECG</Button></td>
                     </tr>
                 ))}
             </tbody>
         </Table>
-        </>
+        </div>
+        </Container>
     );
 }
 

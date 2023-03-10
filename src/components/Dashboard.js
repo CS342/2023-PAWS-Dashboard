@@ -6,8 +6,10 @@ export default function Dashboard({ ecgdata }) {
    const [data, setData] = useState();
 
    useEffect(() => {
-      setData(getVoltageData(ecgdata));
-   }, []);
+      if (ecgdata) {
+         setData(getVoltageData(ecgdata));
+      }
+   }, [ecgdata]);
 
    return <ChartView data={data} />;
 }
