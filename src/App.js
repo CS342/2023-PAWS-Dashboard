@@ -11,10 +11,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 function App() {
    return (
       <div className="App">
-         <Header />
-         <Container>
-            <Router>
-               <AuthProvider>
+         <AuthProvider>
+            <Header />
+            <Container>
+               <Router>
                   <Routes>
                      <Route exact path="/" element={<PrivateRoute />}>
                         <Route exact path="/" element={<Patients />} />
@@ -24,9 +24,9 @@ function App() {
                      </Route>
                      <Route exact path="/login" element={<Login />} />
                   </Routes>
-               </AuthProvider>
-            </Router>
-         </Container>
+               </Router>
+            </Container>
+         </AuthProvider>
       </div>
    );
 }

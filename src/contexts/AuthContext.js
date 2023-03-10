@@ -21,7 +21,7 @@ export function AuthProvider({ children }) {
 
    const login = (email, password) => signInWithEmailAndPassword(auth, email, password);
 
-   const logout = () => signOut();
+   const logout = () => signOut(auth);
 
    const resetPassword = (email) => sendPasswordResetEmail(auth, email);
 
