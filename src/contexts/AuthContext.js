@@ -15,6 +15,7 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
    const [currentUser, setCurrentUser] = useState();
+   const [isAdmin, setIsAdmin] = useState(false);
    const [loading, setLoading] = useState(true);
 
    const signup = (email, password) => createUserWithEmailAndPassword(auth, email, password);
@@ -32,6 +33,16 @@ export function AuthProvider({ children }) {
    useEffect(() => {
       const unsubscribe = auth.onAuthStateChanged((user) => {
          setCurrentUser(user);
+
+         auth.currentUser.getIdTokenResult()
+         .then((result) => {
+            if(result.claims.role === "admin"){
+               setIsAdmin(true);
+            } else {
+               setIsAdmin(false);
+            }
+         })
+
          setLoading(false);
       });
 
@@ -40,6 +51,7 @@ export function AuthProvider({ children }) {
 
    const value = useMemo(() => ({
       currentUser,
+      isAdmin,
       login,
       signup,
       logout,

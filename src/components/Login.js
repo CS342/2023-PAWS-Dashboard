@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { Form, Button, Card, Alert } from 'react-bootstrap';
 import { useAuth } from '../contexts/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
+import { auth } from '../firebase';
 
 export default function Login() {
    const emailRef = useRef();
@@ -18,7 +19,6 @@ export default function Login() {
          setError('');
          setLoading(true);
          await login(emailRef.current.value, passwordRef.current.value);
-         navigate('/');
       } catch {
          setError('Failed to log in');
       }
