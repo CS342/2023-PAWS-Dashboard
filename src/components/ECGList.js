@@ -24,7 +24,7 @@ function ECGList() {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric',
-                timeZone: 'utc',
+                timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
                 hour: '2-digit',
                 minute: '2-digit'
             }
@@ -42,6 +42,15 @@ function ECGList() {
 
             querySnapshot.forEach((doc) => {
                 results.push(doc.data());
+            });
+
+            results.sort((a, b) => {
+                const dateA = new Date(a.effectivePeriod.start);
+                const dateB = new Date(b.effectivePeriod.start);
+
+                if (dateA < dateB) return 1;
+                if (dateB < dateA) return -1;
+                return 0;
             });
 
             setEcgList(results);
