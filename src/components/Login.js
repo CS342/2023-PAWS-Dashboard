@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { Form, Button, Card, Alert } from 'react-bootstrap';
+import { Form, Button, Card, Alert, Container } from 'react-bootstrap';
 import { useAuth } from '../contexts/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -7,30 +7,30 @@ export default function Login() {
    const emailRef = useRef();
    const passwordRef = useRef();
    const { login } = useAuth();
+   const navigate = useNavigate();
    const [error, setError] = useState('');
    const [loading, setLoading] = useState(false);
-   const navigate = useNavigate();
 
    const handleSubmit = async (e) => {
       e.preventDefault();
 
       try {
-         setError('');
+         setError("");
          setLoading(true);
          await login(emailRef.current.value, passwordRef.current.value);
-         navigate('/');
+         navigate("/");
       } catch {
-         setError('Failed to log in');
+         setError("Failed to log in");
       }
 
       setLoading(false);
    }
 
    return (
-      <>
-         <Card>
+      <Container>
+         <Card className="mt-3" style={{width: '25em', margin: '0 auto'}}>
             <Card.Body>
-               <h2 className="text-center mb-4">PAWS Dashboard Log In</h2>
+               <h2 className="text-center mb-4">Log In</h2>
                {error && <Alert variant="danger">{error}</Alert>}
                <Form onSubmit={handleSubmit}>
                   <Form.Group id="email">
@@ -51,9 +51,6 @@ export default function Login() {
                </div>
             </Card.Body>
          </Card>
-         <div className="w-100 text-center mt-2">
-            Need an account? <Link to="/signup">Sign Up</Link>
-         </div>
-      </>
+      </Container>
    );
 }

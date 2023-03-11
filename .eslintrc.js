@@ -17,6 +17,8 @@ module.exports = {
       'react/jsx-filename-extension': 'off',
       'camelcase': 'off',
       'no-console': 'off',
-      'react/prop-types': 'off'
+      'react/prop-types': 'off',
+      'no-nested-ternary': 'off',
+      'import/no-named-as-default': 'off'
    },
 };
