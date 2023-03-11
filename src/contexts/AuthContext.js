@@ -34,14 +34,17 @@ export function AuthProvider({ children }) {
       const unsubscribe = auth.onAuthStateChanged((user) => {
          setCurrentUser(user);
 
-         auth.currentUser.getIdTokenResult()
-         .then((result) => {
-            if(result.claims.role === "admin"){
-               setIsAdmin(true);
-            } else {
-               setIsAdmin(false);
-            }
-         })
+         if (auth.currentUser) {
+            auth.currentUser.getIdTokenResult()
+               .then((result) => {
+                  if (result.claims.role === "admin") {
+                     setIsAdmin(true);
+                  } else {
+                     setIsAdmin(false);
+                  }
+               });
+         }
+
 
          setLoading(false);
       });

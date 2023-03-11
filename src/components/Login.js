@@ -1,8 +1,7 @@
 import { useRef, useState } from 'react';
 import { Form, Button, Card, Alert } from 'react-bootstrap';
 import { useAuth } from '../contexts/AuthContext';
-import { Link, useNavigate } from 'react-router-dom';
-import { auth } from '../firebase';
+import { Link } from 'react-router-dom';
 
 export default function Login() {
    const emailRef = useRef();
@@ -10,7 +9,6 @@ export default function Login() {
    const { login } = useAuth();
    const [error, setError] = useState('');
    const [loading, setLoading] = useState(false);
-   const navigate = useNavigate();
 
    const handleSubmit = async (e) => {
       e.preventDefault();
