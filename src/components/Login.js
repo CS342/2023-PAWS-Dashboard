@@ -30,7 +30,7 @@ export default function Login() {
       <Container>
          <Card className="mt-3" style={{width: '25em', margin: '0 auto'}}>
             <Card.Body>
-               <h2 className="text-center mb-4">PAWS Dashboard Log In</h2>
+               <h2 className="text-center mb-4">Log In</h2>
                {error && <Alert variant="danger">{error}</Alert>}
                <Form onSubmit={handleSubmit}>
                   <Form.Group id="email">
