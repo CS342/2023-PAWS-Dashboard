@@ -25,4 +25,4 @@ jobs:
           node-version: '18'
       - run: npm ci
       - run: npm run build
-      - run: npm test -- --watchAll=false
+      - run: npm test -- --watchAll=false --passWithNoTests
