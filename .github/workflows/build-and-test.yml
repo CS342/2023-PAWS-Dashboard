@@ -1,9 +1,10 @@
-name: Firebase Deploy
+name: Build and Test Dashboard
 
 on:
   push:
     branches: 
     - main
+  pull_request:
 
 jobs:
   build:
@@ -24,9 +25,4 @@ jobs:
           node-version: '18'
       - run: npm ci
       - run: npm run build
-      - name: GitHub Action for Firebase
-        uses: w9jds/firebase-action@v11.22.0
-        with:
-          args: deploy --only hosting
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      - run: npm test -- --watchAll=false --passWithNoTests

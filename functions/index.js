@@ -5,7 +5,7 @@ admin.initializeApp();
 
 exports.updateRole = functions.firestore
     .document("roles/{userId}")
-    .onUpdate((change, context) => {
+    .onWrite((change, context) => {
         const newValue = change.after.data();
         const customClaims = {
             role: newValue.role
