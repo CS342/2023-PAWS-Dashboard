@@ -41,9 +41,6 @@ function Patients() {
     }, [])
 
     return (
-        !isAdmin ? 
-            <h1>Only accessible to admins.</h1>
-        :
         loading ?
             <h1>Loading ...</h1>
             :
