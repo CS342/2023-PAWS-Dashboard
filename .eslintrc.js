@@ -18,6 +18,7 @@ module.exports = {
       'camelcase': 'off',
       'no-console': 'off',
       'react/prop-types': 'off',
-      'no-nested-ternary': 'off'
+      'no-nested-ternary': 'off',
+      'import/no-named-as-default': 'off'
    },
 };

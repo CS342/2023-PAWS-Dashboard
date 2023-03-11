@@ -3,12 +3,10 @@ import { getDocs, collection } from 'firebase/firestore';
 import { Link } from 'react-router-dom';
 import { db } from '../firebase';
 import { Table, Button } from 'react-bootstrap';
-import { useAuth } from '../contexts/AuthContext';
 
 function Patients() {
     const [patientList, setPatientList] = useState([]);
     const [loading, setLoading] = useState(false);
-    const { isAdmin } = useAuth();
 
     useEffect(() => {
         const getPatients = async () => {

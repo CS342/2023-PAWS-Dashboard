@@ -4,6 +4,7 @@ import Patients from './components/Patients';
 import ECGList from './components/ECGList';
 import Login from './components/Login';
 import Header from './components/Header';
+import ForgotPassword from './components/ForgotPassword'
 import PrivateRoute from './components/PrivateRoute';
 import { AuthProvider } from './contexts/AuthContext';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -23,6 +24,7 @@ function App() {
                         <Route exact path="/ecglist/:patient" element={<ECGList />} />
                      </Route>
                      <Route exact path="/login" element={<Login />} />
+                     <Route exact path="/forgot-password" element={<ForgotPassword />} />
                   </Routes>
                </Router>
             </Container>
