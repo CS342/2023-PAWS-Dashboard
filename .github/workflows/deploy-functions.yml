@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CI: ""
+    defaults:
+      run:
+        working-directory: ./functions
 
     steps:
       - uses: actions/checkout@v2
@@ -17,7 +20,6 @@ jobs:
         with:
           node-version: '18'
       - run: npm ci
-      - run: npm run build
       - name: GitHub Action for Firebase
         uses: w9jds/firebase-action@v11.22.0
         with:
