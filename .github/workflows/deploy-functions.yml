@@ -16,10 +16,13 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '18'
-      - run: npm ci
-      - run: npm run build
+      - run: |
+          cd functions
+          npm ci
+          npm run build
       - name: GitHub Action for Firebase
         uses: w9jds/firebase-action@v11.22.0
+        working-directory: ./functions
         with:
           args: deploy --only functions
         env:
