@@ -11,7 +11,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
    return (
-      <div className="App">
+      <div className="App" >
          <AuthProvider>
             <Header />
             <Container>
@@ -29,6 +29,7 @@ function App() {
                </Router>
             </Container>
          </AuthProvider>
+         <footer>{`Copyright © PAWS ${2023}`}</footer>;
       </div>
    );
 }

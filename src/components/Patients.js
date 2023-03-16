@@ -43,8 +43,15 @@ function Patients() {
             <h1>Loading ...</h1>
             :
             <>
-                <h2>Select a patient</h2>
-                <Table>
+            <br />
+            <h3 style={{color: 'salmon', fontWeight: 'bold'}}> Welcome to the PAWS Dashboard!</h3>
+            <br />
+   
+                <h4 > Select a patient to get started</h4>
+            <br />
+            <br />
+
+                <Table >
                     <thead>
                         <tr>
                             <th>Last Name</th>
@@ -58,7 +65,7 @@ function Patients() {
                                 <td>{patient.firstName}</td>
                                 <td>
                                     <Link to={`/ecglist/${patient.id}`} state={{ firstName: patient.firstName, lastName: patient.lastName }}>
-                                        <Button aria-label="View Records">View Records</Button>
+                                        <Button style={{background: "salmon" }} aria-label="View Records">View Records</Button>
                                     </Link>
                                 </td>
                             </tr>
@@ -66,6 +73,7 @@ function Patients() {
                         ))}
                     </tbody>
                 </Table>
+                
             </>
     );
 }

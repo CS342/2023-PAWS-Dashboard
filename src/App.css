@@ -14,7 +14,7 @@
 }
 
 .App-header {
-   background-color: #282c34;
+   background-color: #2d374f;
    min-height: 100vh;
    display: flex;
    flex-direction: column;
@@ -23,6 +23,18 @@
    font-size: calc(10px + 2vmin);
    color: white;
 }
+footer {
+   position: fixed;
+   background-color: rgb(255, 223, 211);
+   bottom: 0;
+   left: 0;
+   right: 0;
+   padding: 8px;
+   text-align: center;
+ }
+ .color-nav {
+   background-color:  rgb(255, 223, 211);
+ }
 
 .App-link {
    color: #61dafb;

@@ -32,7 +32,7 @@ function ChartView({ data }) {
 
 
    return (
-      <ResponsiveContainer minWidth="500" height={250}>
+      <ResponsiveContainer minWidth="600" height={250}>
          <LineChart
             margin={{
                top: 10,
