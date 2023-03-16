@@ -65,7 +65,9 @@ function ECGList() {
         <h1>Loading ...</h1>
         :
         <Container>
-        <h1>{firstName} {lastName}</h1>
+        <br />
+        <h3>{firstName} {lastName}</h3>
+        <br />
         <Dashboard ecgdata={ecgToDisplay} />
         <div style={{height: 300, overflowY: 'scroll'}}>
         <Table>
@@ -73,14 +75,17 @@ function ECGList() {
                 <tr>
                     <th>Date</th>
                     <th>Diagnosis</th>
+                    {/* <th>Average Heart Rate (bpm)</th> */}
                 </tr>
             </thead>
             <tbody>
                 {ecgList.map((ecg) => (
+       
                     <tr className={(ecgToDisplay && ecgToDisplay.id) === ecg.id ? 'highlightedrow' : null}>
                         <td>{dateToHumanReadable(ecg.effectivePeriod.start)}</td>
                         <td>{ecg.component[2].valueString}</td>
-                        <td><Button onClick={() => setEcgToDisplay(ecg)} aria-label="View ECG">View ECG</Button></td>
+                        {/* <td>{ecg.component[3].valueQuantity.value}</td> */}
+                        <td><Button style={{background: "salmon" }} onClick={() => setEcgToDisplay(ecg)} aria-label="View ECG">View ECG</Button></td>
                     </tr>
                 ))}
             </tbody>
