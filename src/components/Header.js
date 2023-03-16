@@ -3,6 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { useAuth } from '../contexts/AuthContext';
 import logo from './paws-logo.svg';
+import logoutIcon from './logout-icon.svg';
 
 function Header() {
   const { logout, currentUser } = useAuth();
@@ -29,7 +30,15 @@ function Header() {
                 
               </Nav>
               <Nav>
-                <Nav.Link onClick={() => logout()}>Log out</Nav.Link>
+                <Nav.Link onClick={() => logout()}>
+                <img
+              alt=""
+              src={logoutIcon}
+              width="20"
+              height="20"
+            />{' '}
+            Log out
+        </Nav.Link>
               </Nav>
             </>
           }
