@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getDocs, collection } from 'firebase/firestore';
+import { getDocs, setDoc, collection} from 'firebase/firestore';
 import { db } from '../firebase';
 import { useParams, useLocation } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
@@ -68,8 +68,30 @@ function ECGList() {
       setRows(updatedRows);
     };
   
-    const handleSave = (index) => {
+
+    const diagnosisToFirebase = async (field, ECG_ID) => {
+        if (typeof field === 'string') {
+            console.log('The field is a string.');
+          } else {
+            console.log('The field is not a string.');
+          }
+          
+        try {
+          // Reference to the document you want to update
+          const documentRef = collection(db, "users", patient, "Observation", ECG_ID, "Physician_Assigned_Diagonsis")
+      
+          // Update the document with new fields
+          await setDoc(documentRef, field);
+      
+          console.log('Fields added to the document successfully');
+        } catch (error) {
+          console.error('Error adding fields to the document:', error);
+        }
+      };
+
+    const handleSave = (index, ECG_ID) => {
         console.log(`Row ${index + 1} saved: ${rows[index]}`);
+        diagnosisToFirebase(rows[index], ECG_ID)
     };
 
     return (
@@ -107,7 +129,7 @@ function ECGList() {
                         />
                     </td>
                     <td>
-                        <button type= "button" onClick={() => handleSave(index)}>Save</button>
+                        <button type= "button" onClick={() => handleSave(index, ecg.id)}>Save</button>
                     </td>
                     <td>
                         <Button
