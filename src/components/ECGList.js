@@ -60,29 +60,16 @@ function ECGList() {
         getEcgs();
     }, [])
 
-    const [text, setText] = useState('');
-    const [savedText, setSavedText] = useState('');
-    const [activeRow, setActiveRow] = useState(null);
+    const [rows, setRows] = useState([]);
 
-
-    const handleChange = (event) => {
-        setText(event.target.value);
+    const handleInputChange = (index, value) => {
+      const updatedRows = [...rows];
+      updatedRows[index] = value;
+      setRows(updatedRows);
     };
-
-    const handleSave = () => {
-        if (activeRow) {
-          setSavedText(text);
-          const docRef = db.collection('rows').doc(activeRow);
-          docRef.set({ text })
-            .then(() => {
-              console.log('Row data saved successfully!');
-            })
-            .catch((error) => {
-              console.error('Error saving row data:', error);
-            });
-          setActiveRow(null);
-          setText('');
-        }
+  
+    const handleSave = (index) => {
+        console.log(`Row ${index + 1} saved: ${rows[index]}`);
     };
 
     return (
@@ -102,26 +89,35 @@ function ECGList() {
                     <th>Watch Diagnosis</th>
                     <th>Average Heart Rate (bpm)</th>
                     <th>Physician Assigned Diagonsis </th>
+                    <th>Save</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                {ecgList.map((ecg) => (
-       
-                    <tr className={(ecgToDisplay && ecgToDisplay.id) === ecg.id ? 'highlightedrow' : null}>
-                        <td>{dateToHumanReadable(ecg.effectivePeriod.start)}</td>
-                        <td>{ecg.component[2].valueString}</td>
-                        <td>{ecg.component[3].valueQuantity.value}</td>
-                        <td>
-                        <input type="text" value={text} onChange={handleChange} />
-                        </td>
-                        <td>
-                        <button type="button" onClick={handleSave}>Save</button>
-                        </td>
-                        <tr>
-                            <td>Saved:</td>
-                            <td>{savedText}</td>
-                        </tr>                       
-                        <td><Button style={{background: "salmon" }} onClick={() => setEcgToDisplay(ecg)} aria-label="View ECG">View ECG</Button></td>
+                {ecgList.map((ecg, index) => (
+                    <tr className={(ecgToDisplay && ecgToDisplay.id) === ecg.id ? 'highlightedrow' : null} key={ecg.id}>
+                    <td>{dateToHumanReadable(ecg.effectivePeriod.start)}</td>
+                    <td>{ecg.component[2].valueString}</td>
+                    <td>{ecg.component[3].valueQuantity.value}</td>
+                    <td>
+                        <input
+                        type="text"
+                        value={rows[index] || ''}
+                        onChange={(event) => handleInputChange(index, event.target.value)}
+                        />
+                    </td>
+                    <td>
+                        <button type= "button" onClick={() => handleSave(index)}>Save</button>
+                    </td>
+                    <td>
+                        <Button
+                        style={{ background: 'salmon' }}
+                        onClick={() => setEcgToDisplay(ecg)}
+                        aria-label="View ECG"
+                        >
+                        View ECG
+                        </Button>
+                    </td>
                     </tr>
                 ))}
             </tbody>
