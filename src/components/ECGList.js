@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import { getDocs, collection } from 'firebase/firestore';
+import { doc, getDocs, setDoc, collection} from 'firebase/firestore';
 import { db } from '../firebase';
 import { useParams, useLocation } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import Dashboard from './Dashboard';
 import { Container } from 'react-bootstrap';
-
+    
 function ECGList() {
     const [ecgList, setEcgList] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -40,8 +40,8 @@ function ECGList() {
             const querySnapshot = await getDocs(ref);
             const results = [];
 
-            querySnapshot.forEach((doc) => {
-                results.push(doc.data());
+            querySnapshot.forEach((doc1) => {
+                results.push(doc1.data());
             });
 
             results.sort((a, b) => {
@@ -60,6 +60,60 @@ function ECGList() {
         getEcgs();
     }, [])
 
+    const [rows, setRows] = useState([]);
+    const [rowData, setRowData] = useState([]);
+
+    const handleInputChange = (index, value) => {
+      const updatedRows = [...rows];
+      updatedRows[index] = value;
+      setRows(updatedRows);
+    };
+
+    function handleDropdownChange(index, event) {
+        const selectedItem = event.target.value;
+
+        const updatedRowData = [...rowData];
+        updatedRowData[index] = selectedItem;
+        setRowData(updatedRowData);
+
+        if (typeof selectedItem === 'string') {
+            console.log('The field is a string.');
+          } else {
+            console.log('The field is not a string.');
+          }
+
+        console.log('Selected Item:', selectedItem);
+      }
+  
+
+    const diagnosisToFirebase = async (name, assignment, ECG_ID) => {
+        try {
+          // Reference to the document you want to update
+          const documentRef = doc(db, "users", patient, "Observation", ECG_ID)
+      
+          // Update the document with new fields
+          await setDoc(
+            documentRef,
+            {
+                physicianAssignedDiagnosis: assignment,
+                physician: name,
+            },
+            { merge: true }
+          );
+      
+          console.log('Fields added to the document successfully');
+        } catch (error) {
+          console.error('Error adding fields to the document:', error);
+        }
+      };
+
+    const handleSave = (index, ECG_ID) => {
+        console.log(`Row ${index + 1} saved: ${rows[index]}`);
+        console.log(`Row ${index + 1} saved: ${rowData[index]}`);
+
+        diagnosisToFirebase(rows[index], rowData[index], ECG_ID)
+    };
+
     return (
         loading ?
         <h1>Loading ...</h1>
@@ -74,18 +128,54 @@ function ECGList() {
             <thead>
                 <tr>
                     <th>Date</th>
-                    <th> Watch Diagnosis</th>
+                    <th>Watch Diagnosis</th>
                     <th>Average Heart Rate (bpm)</th>
+                    <th>Physician Assigned Diagonsis </th>
+                    <th>Physician Initials </th>
+                    <th>Save</th>
+                    <th>ECG</th>
+                    <th>Saved Diagnosis</th>
                 </tr>
             </thead>
             <tbody>
-                {ecgList.map((ecg) => (
-       
-                    <tr className={(ecgToDisplay && ecgToDisplay.id) === ecg.id ? 'highlightedrow' : null}>
-                        <td>{dateToHumanReadable(ecg.effectivePeriod.start)}</td>
-                        <td>{ecg.component[2].valueString}</td>
-                        <td>{ecg.component[3].valueQuantity.value}</td>
-                        <td><Button style={{background: "salmon" }} onClick={() => setEcgToDisplay(ecg)} aria-label="View ECG">View ECG</Button></td>
+                {ecgList.map((ecg, index) => (
+                    <tr className={(ecgToDisplay && ecgToDisplay.id) === ecg.id ? 'highlightedrow' : null} key={ecg.id}>
+                    <td>{dateToHumanReadable(ecg.effectivePeriod.start)}</td>
+                    <td>{ecg.component[2].valueString}</td>
+                    <td>{ecg.component[3].valueQuantity.value}</td>
+                    <td>
+                        <select className="dropdown" onChange={(event) => handleDropdownChange(index, event)}>
+                        <option value="">Select</option>
+                        <option value="Sinus Rhythm">Sinus Rhythm</option>
+                        <option value="AFib">AFib</option>
+                        <option value="SVT">SVT</option>
+                        <option value="VT">VT</option>
+                        <option value="PACs">PACs</option>
+                        <option value="PVCs">PVCs</option>
+                        <option value="Unknown">Unknown</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input
+                        type="text"
+                        value={rows[index] || ''}
+                        size="5"
+                        onChange={(event) => handleInputChange(index, event.target.value)}
+                        />
+                    </td>
+                    <td>
+                        <button type= "button" onClick={() => handleSave(index, ecg.id)}>Save</button>
+                    </td>
+                    <td>
+                        <Button
+                        style={{ background: 'salmon' }}
+                        onClick={() => setEcgToDisplay(ecg)}
+                        aria-label="View ECG"
+                        >
+                        View ECG
+                        </Button>
+                    </td>
+                    <td>{ecg.physician} : {ecg.physicianAssignedDiagnosis}</td>
                     </tr>
                 ))}
             </tbody>
@@ -94,7 +184,5 @@ function ECGList() {
         </Container>
     );
 }
-
-
 
 export default ECGList;
