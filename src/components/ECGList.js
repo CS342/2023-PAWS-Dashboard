@@ -133,7 +133,8 @@ function ECGList() {
                     <th>Physician Assigned Diagonsis </th>
                     <th>Physician Initials </th>
                     <th>Save</th>
-                    <th>Actions</th>
+                    <th>ECG</th>
+                    <th>Saved Diagnosis</th>
                 </tr>
             </thead>
             <tbody>
@@ -174,6 +175,7 @@ function ECGList() {
                         View ECG
                         </Button>
                     </td>
+                    <td>{ecg.physician} : {ecg.physicianAssignedDiagnosis}</td>
                     </tr>
                 ))}
             </tbody>
