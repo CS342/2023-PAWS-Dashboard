@@ -2,8 +2,6 @@ import { useState, useEffect } from 'react';
 import { doc, getDocs, setDoc, collection } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { useParams } from "react-router-dom";
-// import Button from 'react-bootstrap/Button';
-// import Table from 'react-bootstrap/Table';
 import Dashboard from '../Dashboard';
 import { Container } from 'react-bootstrap';
 import { DataGrid } from '@mui/x-data-grid';
@@ -179,15 +177,15 @@ export default function ECGList() {
                 </Button>
             )
         },
-        // {
-        //     field: 'savedDiagnosis', headerName: 'Saved Diagnosis)', flex: 2, renderCell: (params) => (
-        //         <Typography>
-        //              {ecgList[params.rowIndex].physician ? (
-        //                 ecgList[params.rowIndex].physician
-        //             ) : "" }
-        //         </Typography>
-        //     )
-        // }
+        {
+            field: 'savedDiagnosis', headerName: 'Saved Diagnosis)', flex: 2, renderCell: (params) => (
+                <Typography>
+                     {ecgList[params.rowIndex].physician ? (
+                        ecgList[params.rowIndex].physician
+                    ) : "" }
+                </Typography>
+            )
+        }
     ];
 
     const rows = ecgList.map((ecg) => (
