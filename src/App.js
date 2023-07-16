@@ -1,6 +1,6 @@
 import './App.css';
 import Container from 'react-bootstrap/Container';
-import Patients from './components/Patients';
+import PatientList from './components/PatientList';
 import ECGList from './components/ECGList';
 import Login from './components/Login';
 import Header from './components/Header';
@@ -18,7 +18,7 @@ function App() {
                <Router>
                   <Routes>
                      <Route exact path="/" element={<PrivateRoute />}>
-                        <Route exact path="/" element={<Patients />} />
+                        <Route exact path="/" element={<PatientList />} />
                      </Route>
                      <Route exact path="/ecglist/:patient" element={<PrivateRoute />}>
                         <Route exact path="/ecglist/:patient" element={<ECGList />} />

@@ -1,7 +1,6 @@
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
-// import Container from 'react-bootstrap/Container';
 
-function ChartView({ data }) {
+export default function ECGChartView({ data }) {
 
    const gridLines = (start, stop, step) =>
     Array.from(
@@ -9,27 +8,6 @@ function ChartView({ data }) {
     (value, index) => start + index * step
     );
    
-
-
-   // function getMinMax() {
-   //    const times = []
-   //    const voltages = []
-   //    data.forEach(pairs =>  {
-   //       times.push(pairs.x)
-   //       voltages.push(pairs.y)
-   //    })
-     
-
-   //    const time_min = Math.min(...times);
-
-   //    const time_max = Math.max(...times);
-   //    const voltage_min = Math.min(...voltages);
-   //    const voltage_max = Math.max(...voltages);
-   //    // console.log([time_min, time_max, voltage_min, voltage_max])
-   //    return [time_min, time_max, voltage_min, voltage_max]
-
-   // }
-
 
    return (
       <ResponsiveContainer minWidth="600" height={250}>
@@ -91,4 +69,4 @@ function ChartView({ data }) {
    );
 }
 
-export default ChartView;
+

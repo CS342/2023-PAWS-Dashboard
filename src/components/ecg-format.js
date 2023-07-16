@@ -30,6 +30,5 @@ export default function getVoltageData(decoded_data) {
    const second = Math.floor(total_samples * (2 / 3))
    const third = total_samples
    return [time_voltage_data.slice(0, first), time_voltage_data.slice(first + 1, second), time_voltage_data.slice(second + 1, third)];
-   // return time_voltage_data;
 
 }

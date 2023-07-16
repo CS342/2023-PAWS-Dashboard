@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
-import ChartView from './ecg-chart';
-import getVoltageData from './ecg-format';
-// import { Stack } from '@mui/material';
+import ECGChartView from '../ECGChartView';
+import getVoltageData from '../ecg-format';
 import Container from 'react-bootstrap/Container';
 
 export default function Dashboard({ ecgdata }) {
@@ -12,15 +11,14 @@ export default function Dashboard({ ecgdata }) {
          setData(getVoltageData(ecgdata));
       }
    }, [ecgdata]);
-   // return <ChartView data={data} /> 
 
 return (
 
    data && 
    <Container>
-      <ChartView data={data[0]} /> 
-      <ChartView data={data[1]} /> 
-      <ChartView data={data[2]} />
+      <ECGChartView data={data[0]} /> 
+      <ECGChartView data={data[1]} /> 
+      <ECGChartView data={data[2]} />
    </Container>
 
 );  
