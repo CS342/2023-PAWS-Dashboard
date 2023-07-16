@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react';
 import { Form, Button, Card, Alert, Container } from 'react-bootstrap';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
-import logo from './paws-logo.svg';
+import logo from '../paws-logo.svg';
 
 export default function Login() {
    const emailRef = useRef();

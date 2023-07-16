@@ -1,7 +1,7 @@
 import { Container, Card } from 'react-bootstrap';
 import { ExclamationTriangle } from 'react-bootstrap-icons'; 
 
-function AdminWarning() {
+export default function AdminWarning() {
     return (
         <Container>
             <Card className="mt-3" style={{ width: '25em', margin: '0 auto' }}>
@@ -14,4 +14,3 @@ function AdminWarning() {
         </Container>
     )
 }
-export default AdminWarning;
