@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { doc, getDocs, setDoc, collection } from 'firebase/firestore';
+import { doc, query, where, getDocs, setDoc, collection } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { useParams, useLocation } from "react-router-dom";
 import Table from 'react-bootstrap/Table';
@@ -61,23 +61,47 @@ export default function ECGList() {
         setQualities(updatedRowData);
     }
 
-
     const diagnosisToFirebase = async (name, assignment, quality, ECG_ID) => {
         try {
             // Reference to the document you want to update
-            const documentRef = doc(db, "users", patient, "Observation", ECG_ID)
+            const collectionRef = collection(db, "users", patient, "Observation", ECG_ID, "Diagnosis")
 
             // Update the document with new fields
-            await setDoc(
-                documentRef,
-                {
-                    physicianAssignedDiagnosis: assignment,
-                    physician: name,
-                    tracingQuality: quality,
-                },
-                { merge: true }
-            );
-            console.log('Fields added to the document successfully');
+
+            const q = query(collectionRef, where('physician', '==', name));
+            const querySnapshot = await getDocs(q);
+
+            if (querySnapshot.empty) {
+                // if (verifyMaxDiagosis(name, collectionRef) > 2) {
+                //     console.log('Max diagosis input reached');
+                //     return
+                // } 
+                const newDocumentRef = doc(collectionRef);
+                await setDoc(
+                    newDocumentRef,
+                    {
+                        physicianAssignedDiagnosis: assignment,
+                        physician: name,
+                        tracingQuality: quality,
+                    }
+                );
+                console.log('Fields added to the document successfully');
+                         
+            } else {
+                console.log(name, ' diagosis input updated');
+                const documentRef = doc(db, "users", patient, "Observation", ECG_ID, "Diagnosis", querySnapshot.docs[0].id);
+                
+                await setDoc(documentRef,
+                    {
+                        physicianAssignedDiagnosis: assignment,
+                        physician: name,
+                        tracingQuality: quality,
+                    },
+                    { merge: true }
+                );
+
+                console.log('Fields added to the document successfully');
+            }
         } catch (error) {
             console.error('Error adding fields to the document:', error);
         }
