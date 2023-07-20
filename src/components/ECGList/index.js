@@ -4,8 +4,9 @@ import { db } from '../../firebase';
 import { useParams, useLocation } from "react-router-dom";
 import Table from 'react-bootstrap/Table';
 import Dashboard from '../Dashboard';
-import { Container } from 'react-bootstrap';
-import {  Button } from '@mui/material';
+import { Container, Modal, Button as Button2 } from 'react-bootstrap';
+import { Button } from '@mui/material';
+
 
 export default function ECGList() {
     const [ecgList, setEcgList] = useState([]);
@@ -17,6 +18,20 @@ export default function ECGList() {
     const [names, setNames] = useState([]);
     const [diagnoses, setDiagnoses] = useState([]);
     const [qualities, setQualities] = useState([]);
+    const [show, setShow] = useState(false);
+
+    const [modalData, setModalData] = useState();
+    const [modalEcgID, setModalEcgID] = useState("");
+
+    const handleClose = () => setShow(false);
+    const handleShow = async (ecg_id) => {
+        const collectionRef = collection(db, "users", patient, "Observation", ecg_id, "Diagnosis")
+        const querySnapshot = await getDocs(collectionRef);
+        const fetchedData = querySnapshot.docs.map((document) => document.data());
+        setModalData(fetchedData);
+        setModalEcgID(ecg_id);
+        setShow(true);
+    }
 
     const dateToHumanReadable = (date) => {
         const humanReadableDate = new Date(date).toLocaleDateString(
@@ -86,11 +101,11 @@ export default function ECGList() {
                     }
                 );
                 console.log('Fields added to the document successfully');
-                         
+
             } else {
                 console.log(name, ' diagosis input updated');
                 const documentRef = doc(db, "users", patient, "Observation", ECG_ID, "Diagnosis", querySnapshot.docs[0].id);
-                
+
                 await setDoc(documentRef,
                     {
                         physicianAssignedDiagnosis: assignment,
@@ -142,12 +157,47 @@ export default function ECGList() {
             <h1>Loading ...</h1>
             :
             <Container>
+                <Modal show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Modal heading</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                    <h2>Popup Content</h2>
+                    <p>ID: {modalEcgID}</p>
+                    <table>
+                    <thead>
+                        <tr>
+                        <th>Physician Initials 1</th>
+                        <th>Diagnosis</th>
+                        <th>Tracing Quality</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {modalData && modalData.map((document) => (
+                        <tr key={document.id}>
+                            <td>{document.physician}</td>
+                            <td>{document.physicianAssignedDiagnosis}</td>
+                            <td>{document.tracingQuality}</td>
+                        </tr>
+                        ))}
+                    </tbody>
+                    </table>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button2 variant="secondary" onClick={handleClose}>
+                            Close
+                        </Button2>
+                        <Button2 variant="primary" onClick={handleClose}>
+                            Save Changes
+                        </Button2>
+                    </Modal.Footer>
+                </Modal>
                 <br />
                 <h3>{firstName} {lastName}</h3>
                 <br />
-                
+
                 <Dashboard ecgdata={ecgToDisplay} />
-       
+
                 <div style={{ height: 300, overflowY: 'scroll' }}>
                     <Table>
                         <thead>
@@ -202,27 +252,33 @@ export default function ECGList() {
                                             />
                                         </td>
                                         <td>
-                                        <Button size="small" variant="contained" sx={{ width: 100, margin: 2 }}
-                                            onClick={() => handleSave(index, ecg.id)}
-                                        >
-                                            Save
-                                        </Button>
+                                            <Button size="small" variant="contained" sx={{ width: 100, margin: 2 }}
+                                                onClick={() => handleSave(index, ecg.id)}
+                                            >
+                                                Save
+                                            </Button>
                                         </td>
                                         <td>
-                                        <Button size="small" variant="contained"
-                                            sx={{ width: 100, margin: 2 }} style={{ backgroundColor: '#FF6758' }}
-                                            onClick={() => setEcgToDisplay(ecg)}> View ECG
-                                        </Button>
+                                            <Button size="small" variant="contained"
+                                                sx={{ width: 100, margin: 2 }} style={{ backgroundColor: '#FF6758' }}
+                                                onClick={() => setEcgToDisplay(ecg)}> View ECG
+                                            </Button>
                                         </td>
-                                        <td>{ecg.physician} : {ecg.physicianAssignedDiagnosis}</td>
+                                        <td>
+                                            <Button variant="primary" onClick={() => { 
+                                                handleShow(ecg.id)
+                                            }}>
+                                                Launch demo modal
+                                            </Button>
+                                        </td>
                                     </tr>
                                 )) : null
                             }
                         </tbody>
                     </Table>
-                    </div>
-                 </Container>
-     
+                </div>
+            </Container>
+
     );
 }
 
