@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import Dashboard from '../Dashboard';
 import { Container } from 'react-bootstrap';
 import { DataGrid } from '@mui/x-data-grid';
-import { Typography, Button } from '@mui/material';
+import { Button } from '@mui/material';
 
 
 export default function ECGList() {
