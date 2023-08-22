@@ -5,7 +5,6 @@ import { useAuth } from '../../contexts/AuthContext';
 import logo from '../paws-logo.svg';
 import {  Stack } from '@mui/material';
 
-
 export default function Header() {
   const { logout, currentUser } = useAuth();
 

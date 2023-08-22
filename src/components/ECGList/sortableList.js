@@ -5,7 +5,8 @@ import { useParams } from "react-router-dom";
 import Dashboard from '../Dashboard';
 import { Container } from 'react-bootstrap';
 import { DataGrid } from '@mui/x-data-grid';
-import {  Button } from '@mui/material';
+import { Typography, Button } from '@mui/material';
+
 
 export default function ECGList() {
     const [ecgList, setEcgList] = useState([]);
@@ -177,6 +178,7 @@ export default function ECGList() {
                 </Button>
             )
         },
+
         // {
         //     field: 'savedDiagnosis', headerName: 'Saved Diagnosis)', flex: 2, renderCell: (params) => (
         //         <Typography>

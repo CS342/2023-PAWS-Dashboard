@@ -11,9 +11,9 @@ export default function ECGList() {
     const [ecgList, setEcgList] = useState([]);
     const [loading, setLoading] = useState(false);
     const [ecgToDisplay, setEcgToDisplay] = useState();
-    const { patient} = useParams();
+    const { patient } = useParams();
     const location = useLocation();
-    const {state} = location;
+    const { firstName, lastName } = location.state
     const [names, setNames] = useState([]);
     const [diagnoses, setDiagnoses] = useState([]);
     const [qualities, setQualities] = useState([]);
@@ -119,7 +119,7 @@ export default function ECGList() {
             :
             <Container>
                 <br />
-                <h3>{state === null ? null: state.firstName} {state === null ? null: state.lastName}</h3>
+                <h3>{firstName} {lastName}</h3>
                 <br />
                 
                 <Dashboard ecgdata={ecgToDisplay} />
