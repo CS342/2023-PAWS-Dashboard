@@ -1,5 +1,8 @@
 # CS342 2023 PAWS Clinician Dashboard
 
+[![Build and Test Dashboard](https://github.com/CS342/2023-PAWS-Dashboard/actions/workflows/build-and-test-dashboard.yml/badge.svg)](https://github.com/CS342/2023-PAWS-Dashboard/actions/workflows/build-and-test-dashboard.yml)
+[![CodeQL](https://github.com/CS342/2023-PAWS-Dashboard/actions/workflows/codeql.yml/badge.svg)](https://github.com/CS342/2023-PAWS-Dashboard/actions/workflows/codeql.yml)
+
 This repository contains the clinician facing dashboard for the [CS342 2023 PAWS Team Application](https://github.com/CS342/2023-PAWS) which displays the ECG data derived from users of the iOS application.
 
 This application is built using [React](https://react.dev/) and bootstrapped using [Create React App](https://create-react-app.dev/).
