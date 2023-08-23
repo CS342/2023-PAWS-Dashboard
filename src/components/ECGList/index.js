@@ -23,6 +23,10 @@ export default function ECGList() {
     const [modalData, setModalData] = useState();
     const [modalEcgID, setModalEcgID] = useState("");
 
+    const cellStyle = {
+        padding: '15px', // Adjust the value as needed
+    };
+
     const handleClose = () => setShow(false);
     const handleShow = async (ecg_id) => {
         const collectionRef = collection(db, "users", patient, "Observation", ecg_id, "Diagnosis")
@@ -159,25 +163,24 @@ export default function ECGList() {
             <Container>
                 <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Modal heading</Modal.Title>
+                        <Modal.Title>ECG Diagnosis History</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                    <h2>Popup Content</h2>
                     <p>ID: {modalEcgID}</p>
                     <table>
                     <thead>
                         <tr>
-                        <th>Physician Initials 1</th>
-                        <th>Diagnosis</th>
-                        <th>Tracing Quality</th>
+                        <th style={cellStyle}>Physician Initials </th>
+                        <th style={cellStyle}>Diagnosis</th>
+                        <th style={cellStyle}>Tracing Quality</th>
                         </tr>
                     </thead>
                     <tbody>
                         {modalData && modalData.map((document) => (
                         <tr key={document.id}>
-                            <td>{document.physician}</td>
-                            <td>{document.physicianAssignedDiagnosis}</td>
-                            <td>{document.tracingQuality}</td>
+                            <td style={cellStyle}>{document.physician}</td>
+                            <td style={cellStyle}>{document.physicianAssignedDiagnosis}</td>
+                            <td style={cellStyle}>{document.tracingQuality}</td>
                         </tr>
                         ))}
                     </tbody>
@@ -193,6 +196,7 @@ export default function ECGList() {
                     </Modal.Footer>
                 </Modal>
                 <br />
+                
                 <h3>{firstName} {lastName}</h3>
                 <br />
 
@@ -268,7 +272,7 @@ export default function ECGList() {
                                             <Button variant="primary" onClick={() => { 
                                                 handleShow(ecg.id)
                                             }}>
-                                                Launch demo modal
+                                                View History
                                             </Button>
                                         </td>
                                     </tr>
