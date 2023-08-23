@@ -17,13 +17,17 @@ export default function PatientList() {
             field: 'records',
             headerName: '',
             flex: 0.5,
-            renderCell: (params) => (
-                <Link to={`/ecglist/${params.id}`} state={{ firstName: params.firstName, lastName: params.lastName }}>
+            renderCell: (params) => {
+                console.log("patient row params", params.row); // Log the params object to the console
+                
+                return (
+                    <Link to={`/ecglist/${params.id}`} state={{ firstName: params.firstName, lastName: params.lastName }}>
                     <Button size="small" variant="contained" sx={{ width: 200, margin: 2 }} style={{ backgroundColor: '#FF6758' }}>
                         View Records
                     </Button>
-                </Link>
-            ),
+                    </Link>
+                );
+            },
         },
     ];
 

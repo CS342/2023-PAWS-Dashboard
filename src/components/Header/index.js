@@ -3,6 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { useAuth } from '../../contexts/AuthContext';
 import logo from '../paws-logo.svg';
+import {  Stack } from '@mui/material';
 
 export default function Header() {
   const { logout, currentUser } = useAuth();
@@ -24,15 +25,22 @@ export default function Header() {
         <Navbar.Collapse id="basic-navbar-nav">
           {currentUser &&
             <>
+            <Stack direction="row" spacing={2}>
               <Nav className="me-auto">
-                <Nav.Link href="/">Patient List</Nav.Link>
-              </Nav>
+                  <Nav.Link href="/">Patients</Nav.Link>
+                </Nav>
+                <Nav className="me-auto">
+                  <Nav.Link href="/records">All Records</Nav.Link>
+                </Nav>
+            </Stack>
+             
+            <div className="ml-auto"> {/* Use ml-auto to align the content to the right */}
               <Nav>
                 <Nav.Link onClick={() => logout()}>
-
                   Log out
                 </Nav.Link>
               </Nav>
+            </div>
             </>
           }
         </Navbar.Collapse>
