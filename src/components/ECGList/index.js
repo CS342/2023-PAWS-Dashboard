@@ -52,6 +52,27 @@ export default function ECGList() {
         return humanReadableDate;
     }
 
+    const symptomDisplay = (ecg) => {
+        let symptom = `N/A`
+
+        if (ecg.component[4].valueString === "present"){
+            let n = 5;           
+            while (ecg.component[n].valueString !== undefined){
+                const new_symptom = ecg.component[n].code.coding[0].display
+                console.log(`${new_symptom} exists.`);
+
+                symptom = `${symptom}, ${new_symptom}`
+                n += 1;
+            }
+        }
+
+        if (symptom !== `N/A`){
+            symptom = symptom.slice(5);
+        }
+
+        return symptom;
+    }
+
     const handleInputChange = (index, value) => {
         const updatedRows = [...names];
         updatedRows[index] = value;
@@ -196,10 +217,9 @@ export default function ECGList() {
                     </Modal.Footer>
                 </Modal>
                 <br />
-                
+
                 <h3>{firstName} {lastName}</h3>
                 <br />
-
                 <Dashboard ecgdata={ecgToDisplay} />
 
                 <div style={{ height: 300, overflowY: 'scroll' }}>
@@ -209,6 +229,7 @@ export default function ECGList() {
                                 <th>Date</th>
                                 <th>Watch Diagnosis</th>
                                 <th>Average Heart Rate (bpm)</th>
+                                <th>Reported Symptoms</th>
                                 <th>Physician Assigned Diagnosis </th>
                                 <th>Tracing Quality </th>
                                 <th>Physician Initials </th>
@@ -225,6 +246,7 @@ export default function ECGList() {
                                         <td>{dateToHumanReadable(ecg.effectivePeriod.start)}</td>
                                         <td>{ecg.component[2].valueString}</td>
                                         <td>{ecg.component[3].valueQuantity.value}</td>
+                                        <td>{symptomDisplay(ecg)}</td>
                                         <td>
                                             <select className="dropdown" onChange={(event) => handleDiagnosisDropdownChange(index, event)}>
                                                 <option value="">Select</option>
