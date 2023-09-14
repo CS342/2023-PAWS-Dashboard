@@ -153,8 +153,9 @@ export default function ECGList() {
 
                 console.log('Fields added to the document successfully');
             }
+            handleSaveButtonClick(ECG_ID); // change Row to green only if save is complete
         } catch (error) {
-            console.error('Error adding fields to the document:', error);
+            console.error('Error adding fields to the document: ', error);
         }
     };
 
@@ -162,8 +163,13 @@ export default function ECGList() {
         console.log(`Row ${index + 1} saved: ${names[index]}`);
         console.log(`Row ${index + 1} saved: ${diagnoses[index]}`);
         console.log(`Row ${index + 1} saved: ${qualities[index]}`);
-        diagnosisToFirebase(names[index], diagnoses[index], qualities[index], ECG_ID)
-    };
+        try {
+            diagnosisToFirebase(names[index], diagnoses[index], qualities[index], ECG_ID)
+          } catch (error) {
+            console.log("CS kids are useless");
+          } 
+        }
+        ;
 
     useEffect(() => {
         const getEcgs = async () => {
@@ -305,7 +311,6 @@ export default function ECGList() {
                                                 sx={{ width: 100, margin: 2 }} style={{ backgroundColor: '#10AD92' }}
                                                 onClick={(event) => {
                                                     handleSave(index, ecg.id);
-                                                    handleSaveButtonClick(ecg.id);
                                             }}>
                                                 Save
                                             </Button>
