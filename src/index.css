@@ -10,10 +10,21 @@ code {
    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
+.table {
+   --bs-table-bg: transparent;
+}
+
 .highlightedrow {
    background-color: bisque;
 }
 
+.blue-row {
+   background-color: rgb(116, 206, 241);
+}
+
+.green-row {
+   background-color: rgb(151, 242, 151);
+}
 .flex-container {
    display: flex;
    align-items: flex-start;

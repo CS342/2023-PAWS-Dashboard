@@ -1,3 +1,4 @@
+import '../../index.css'; 
 import { useState, useEffect } from 'react';
 import { doc, query, where, getDocs, setDoc, collection } from 'firebase/firestore';
 import { db } from '../../firebase';
@@ -6,7 +7,6 @@ import Table from 'react-bootstrap/Table';
 import Dashboard from '../Dashboard';
 import { Container, Modal, Button as Button2 } from 'react-bootstrap';
 import { Button } from '@mui/material';
-
 
 export default function ECGList() {
     const [ecgList, setEcgList] = useState([]);
@@ -19,23 +19,18 @@ export default function ECGList() {
     const [diagnoses, setDiagnoses] = useState([]);
     const [qualities, setQualities] = useState([]);
     const [show, setShow] = useState(false);
+    const [highlightedRow, setHighlightedRow] = useState(null); // State to track the highlighted row
+    const [highlightedRowGreen, setHighlightedRowGreen] = useState(null);
+  
 
     const [modalData, setModalData] = useState();
-    const [modalEcgID, setModalEcgID] = useState("");
+    const [modalEcgDate, setModalEcgDate] = useState("");
 
     const cellStyle = {
         padding: '15px', // Adjust the value as needed
     };
 
     const handleClose = () => setShow(false);
-    const handleShow = async (ecg_id) => {
-        const collectionRef = collection(db, "users", patient, "Observation", ecg_id, "Diagnosis")
-        const querySnapshot = await getDocs(collectionRef);
-        const fetchedData = querySnapshot.docs.map((document) => document.data());
-        setModalData(fetchedData);
-        setModalEcgID(ecg_id);
-        setShow(true);
-    }
 
     const dateToHumanReadable = (date) => {
         const humanReadableDate = new Date(date).toLocaleDateString(
@@ -50,6 +45,16 @@ export default function ECGList() {
             }
         )
         return humanReadableDate;
+    }
+
+    const handleShow = async (modal_ecg) => {
+        const collectionRef = collection(db, "users", patient, "Observation", modal_ecg.id, "Diagnosis")
+        const querySnapshot = await getDocs(collectionRef);
+        const fetchedData = querySnapshot.docs.map((document) => document.data());
+        const fetchedDate = dateToHumanReadable(modal_ecg.effectivePeriod.start)
+        setModalData(fetchedData);
+        setModalEcgDate(fetchedDate);
+        setShow(true);
     }
 
     const symptomDisplay = (ecg) => {
@@ -77,6 +82,16 @@ export default function ECGList() {
         const updatedRows = [...names];
         updatedRows[index] = value;
         setNames(updatedRows);
+    };
+
+    const handleEcgButtonClick = (rowKey) => {
+        setHighlightedRow(rowKey);
+        setHighlightedRowGreen(null); // Reset the other button's highlight
+    };
+
+    const handleSaveButtonClick = (rowKey) => {
+        setHighlightedRowGreen(rowKey);
+        setHighlightedRow(null); // Reset the other button's highlight
     };
 
     function handleDiagnosisDropdownChange(index, event) {
@@ -112,10 +127,6 @@ export default function ECGList() {
             const querySnapshot = await getDocs(q);
 
             if (querySnapshot.empty) {
-                // if (verifyMaxDiagosis(name, collectionRef) > 2) {
-                //     console.log('Max diagosis input reached');
-                //     return
-                // } 
                 const newDocumentRef = doc(collectionRef);
                 await setDoc(
                     newDocumentRef,
@@ -187,7 +198,7 @@ export default function ECGList() {
                         <Modal.Title>ECG Diagnosis History</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                    <p>ID: {modalEcgID}</p>
+                    <p>Date: {modalEcgDate}</p>
                     <table>
                     <thead>
                         <tr>
@@ -211,9 +222,6 @@ export default function ECGList() {
                         <Button2 variant="secondary" onClick={handleClose}>
                             Close
                         </Button2>
-                        <Button2 variant="primary" onClick={handleClose}>
-                            Save Changes
-                        </Button2>
                     </Modal.Footer>
                 </Modal>
                 <br />
@@ -230,11 +238,11 @@ export default function ECGList() {
                                 <th>Watch Diagnosis</th>
                                 <th>Average Heart Rate (bpm)</th>
                                 <th>Reported Symptoms</th>
+                                <th>ECG</th>
                                 <th>Physician Assigned Diagnosis </th>
                                 <th>Tracing Quality </th>
                                 <th>Physician Initials </th>
                                 <th>Save</th>
-                                <th>ECG</th>
                                 <th>Saved Diagnosis</th>
                             </tr>
                         </thead>
@@ -242,11 +250,26 @@ export default function ECGList() {
                             {ecgList.length > 0 ?
 
                                 ecgList.map((ecg, index) => (
-                                    <tr className={(ecgToDisplay && ecgToDisplay.id) === ecg.id ? 'highlightedrow' : null} key={ecg.id}>
+                                    <tr key={ecg.id}
+                                        className={`
+                                            ${(ecgToDisplay && ecgToDisplay.id) === ecg.id ? 'highlightedrow' : ''}
+                                            ${highlightedRowGreen === ecg.id ? 'green-row' : ''}
+                                        `}>
+
                                         <td>{dateToHumanReadable(ecg.effectivePeriod.start)}</td>
                                         <td>{ecg.component[2].valueString}</td>
                                         <td>{ecg.component[3].valueQuantity.value}</td>
                                         <td>{symptomDisplay(ecg)}</td>
+                                        <td>
+                                            <Button size="small" variant="contained"
+                                                sx={{ width: 100, margin: 2 }} style={{ backgroundColor: '#FD9F46' }}
+                                                onClick={(event) => {
+                                                    setEcgToDisplay(ecg);
+                                                    handleEcgButtonClick(ecg.id);
+                                                }}> 
+                                                    View ECG
+                                            </Button>
+                                        </td>
                                         <td>
                                             <select className="dropdown" onChange={(event) => handleDiagnosisDropdownChange(index, event)}>
                                                 <option value="">Select</option>
@@ -278,21 +301,20 @@ export default function ECGList() {
                                             />
                                         </td>
                                         <td>
-                                            <Button size="small" variant="contained" sx={{ width: 100, margin: 2 }}
-                                                onClick={() => handleSave(index, ecg.id)}
-                                            >
+                                            <Button size="small" variant="contained" 
+                                                sx={{ width: 100, margin: 2 }} style={{ backgroundColor: '#10AD92' }}
+                                                onClick={(event) => {
+                                                    handleSave(index, ecg.id);
+                                                    handleSaveButtonClick(ecg.id);
+                                            }}>
                                                 Save
                                             </Button>
                                         </td>
                                         <td>
                                             <Button size="small" variant="contained"
-                                                sx={{ width: 100, margin: 2 }} style={{ backgroundColor: '#FF6758' }}
-                                                onClick={() => setEcgToDisplay(ecg)}> View ECG
-                                            </Button>
-                                        </td>
-                                        <td>
-                                            <Button variant="primary" onClick={() => { 
-                                                handleShow(ecg.id)
+                                                sx={{ width: 100, margin: 2 }} style={{ backgroundColor: '#7D7D7D' }} 
+                                                onClick={() => { 
+                                                handleShow(ecg);
                                             }}>
                                                 View History
                                             </Button>
