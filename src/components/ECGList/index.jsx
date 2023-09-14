@@ -64,8 +64,6 @@ export default function ECGList() {
             let n = 5;           
             while (ecg.component[n].valueString !== undefined){
                 const new_symptom = ecg.component[n].code.coding[0].display
-                console.log(`${new_symptom} exists.`);
-
                 symptom = `${symptom}, ${new_symptom}`
                 n += 1;
             }
@@ -100,13 +98,6 @@ export default function ECGList() {
         const updatedRowData = [...diagnoses];
         updatedRowData[index] = selectedItem;
         setDiagnoses(updatedRowData);
-
-        if (typeof selectedItem === 'string') {
-            console.log('The field is a string.');
-        } else {
-            console.log('The field is not a string.');
-        }
-
         console.log('Selected Item:', selectedItem);
     }
     function handleQualityDropdownChange(index, event) {
@@ -166,7 +157,6 @@ export default function ECGList() {
         try {
             diagnosisToFirebase(names[index], diagnoses[index], qualities[index], ECG_ID)
           } catch (error) {
-            console.log("CS kids are useless");
           } 
         }
         ;
